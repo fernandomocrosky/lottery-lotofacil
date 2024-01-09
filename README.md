@@ -6,7 +6,7 @@ Este código consegue gerar um jogo que ainda não foi sorteado, ou seja, uma co
 
 ## Executando o código
 Para executar o código é necessário instalar o NodeJs encontrado no site oficial [NodeJS](https://nodejs.org/en). Após a instalação execute o comando abaixo na pasta raiz onde esta o arquivo app.js e o arquivo data.json
-    `node app.js`
+    node app.js
 
 
 
