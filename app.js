@@ -63,9 +63,5 @@ function getGame(results) {
 //     numberOfTimes[result.data[i].toString()]++;
 // }
 
-let game2 = [23,	20,	5,	2,	7,	8,	11,	4,	9,	17,	14,	25,	3,	22,	19,];
-game2.sort((a, b) => a - b);
-let isIn = isGameInResult(game2, result.data);
-
 let game = getGame(result.data);
 console.log(game);
