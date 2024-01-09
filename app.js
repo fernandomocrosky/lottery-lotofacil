@@ -1,4 +1,4 @@
-var result = require("./dados.json");
+var result = require("./data.json");
 
 // console.log(result);
 
