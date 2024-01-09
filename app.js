@@ -6,7 +6,7 @@ function isGameInResult(game, results) {
     let isIn = false;
     let k = 0;
     resultGame = [];
-    for (let i = 0; i < results.length - 14; i++) {
+    for (let i = 0; i < results.length; i += 15) {
         for(j = 0; j < 15; j++) {
             resultGame.push(results[i + j]);
         }
@@ -14,7 +14,9 @@ function isGameInResult(game, results) {
         if(resultGame.toString() === game.toString()) {
             isIn = true;
             k = Math.floor((i / 15)) + 3;
-            console.log(k + " Jogo - " + game);
+            console.log("Combination already drawn! Line - " + k);
+            console.log(game);
+            console.log(resultGame);
         }
         resultGame = [];
     }
@@ -23,7 +25,7 @@ function isGameInResult(game, results) {
 
 function getGame(results) {
     let isIn = true;
-    let game = [18,	20,	25,	23,	10,	11,	24,	14,	6,	2,	13,	9,	5,	16,	3];
+    let game = [];
     while(isIn) {
         game = [];
         for (let i = 1; i <= 15; i++) {
@@ -42,23 +44,28 @@ function getGame(results) {
         game.sort((a, b) => a - b);
         isIn = isGameInResult(game, results);
         if(!isIn) {
-            console.log("Combinação ainda não sorteada");
+            console.log("Combination not yet drawn !");
         }
     }
     return game;
 }
 
-numberOfTimes = {};
+// The code commented below was made to count how many times 
+// each number appears in the json file.
 
-for(let i = 1; i <= 25; i++) {
-    numberOfTimes[i.toString()] = 0;
-}
+// numberOfTimes = {};
 
-for(let i = 0; i < result.data.length; i++) {
-    numberOfTimes[result.data[i].toString()]++;
-}
+// for(let i = 1; i <= 25; i++) {
+//     numberOfTimes[i.toString()] = 0;
+// }
+
+// for(let i = 0; i < result.data.length; i++) {
+//     numberOfTimes[result.data[i].toString()]++;
+// }
+
+let game2 = [23,	20,	5,	2,	7,	8,	11,	4,	9,	17,	14,	25,	3,	22,	19,];
+game2.sort((a, b) => a - b);
+let isIn = isGameInResult(game2, result.data);
 
 let game = getGame(result.data);
 console.log(game);
-
-// let isIn = isGameInResult(game, result.data);
