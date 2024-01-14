@@ -1,4 +1,4 @@
-var result = require("./data.json");
+var results = require("./data.json");
 
 // console.log(result);
 
@@ -23,7 +23,22 @@ function isGameInResult(game, results) {
   return isIn;
 }
 
-function getGame(results) {
+function isInGames(gameDrawn, games) {
+  let isInGames = false;
+  games.forEach((gam) => {
+    for (key in gam) {
+      let array1 = gam[key].toString();
+      let array2 = gameDrawn.toString();
+      if (array1 == array2) {
+        isInGames = true;
+      }
+    }
+  });
+
+  return isInGames;
+}
+
+function getGame(results, games) {
   let isIn = true;
   let game = [];
   while (isIn) {
@@ -42,12 +57,47 @@ function getGame(results) {
       }
     }
     game.sort((a, b) => a - b);
-    isIn = isGameInResult(game, results);
+    isIn = isGameInResult(game, results, games);
     if (!isIn) {
-      console.log("Combination not yet drawn!");
+      isIn = isInGames(game, games);
     }
   }
   return game;
+}
+
+function sortTimes(nTimes) {
+  min = nTimes[1];
+  max = nTimes[1];
+  let sorted = [];
+  for (key in nTimes) {
+    if (nTimes[key] < min) {
+      min = nTimes[key];
+    }
+    if (nTimes[key] > max) {
+      max = nTimes[key];
+    }
+  }
+
+  for (let i = min; i <= max; i++) {
+    for (key in nTimes) {
+      if (nTimes[key] == i) {
+        object = {};
+        object[key] = nTimes[key];
+        sorted.push(object);
+      }
+    }
+  }
+
+  return sorted;
+}
+
+function mostProb(sorted) {
+  mostProb = [];
+  for (let i = 0; i < 15; i++) {
+    mostProb.push(Number(Object.keys(sorted[i])[0]));
+  }
+  mostProb.sort((a, b) => a - b);
+  return mostProb;
 }
 
 /* 
@@ -55,15 +105,15 @@ function getGame(results) {
   each number appears in the json file. 
 */
 
-// numberOfTimes = {};
+let numberOfTimes = {};
 
-// for(let i = 1; i <= 25; i++) {
-//     numberOfTimes[i.toString()] = 0;
-// }
+for (let i = 1; i <= 25; i++) {
+  numberOfTimes[i.toString()] = 0;
+}
 
-// for(let i = 0; i < result.data.length; i++) {
-//     numberOfTimes[result.data[i].toString()]++;
-// }
+for (let i = 0; i < results.data.length; i++) {
+  numberOfTimes[results.data[i].toString()]++;
+}
 
 /*
   The code commented below was made to see if a combination of numbers was already drawn
@@ -74,5 +124,28 @@ function getGame(results) {
 // game2.sort((a, b) => a - b);
 // let isIn = isGameInResult(game2, result.data);
 
-let game = getGame(result.data);
-console.log(game);
+let games = [];
+
+let mostProbGame = mostProb(sortTimes(numberOfTimes));
+
+let ngames = 0;
+let f = 0;
+
+if (isGameInResult(mostProbGame, results)) {
+  ngames = 11;
+  f = 0;
+} else {
+  f = 1;
+  ngames = 10;
+}
+
+games.push({ "Most Prob Game": mostProbGame });
+
+for (let i = 1; i < ngames; i++) {
+  let game = getGame(results.data, games);
+  let newgame = {};
+  newgame[`Game ${i + f}`] = game;
+  games.push(newgame);
+}
+
+console.log(games);
