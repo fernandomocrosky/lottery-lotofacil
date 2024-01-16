@@ -132,14 +132,13 @@ let ngames = 0;
 let f = 0;
 
 if (isGameInResult(mostProbGame, results)) {
-  ngames = 11;
-  f = 0;
-} else {
-  f = 1;
   ngames = 10;
+  f = 1;
+  games.push({ "Most Prob Game": mostProbGame });
+} else {
+  f = 0;
+  ngames = 11;
 }
-
-games.push({ "Most Prob Game": mostProbGame });
 
 for (let i = 1; i < ngames; i++) {
   let game = getGame(results.data, games);
