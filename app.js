@@ -39,9 +39,13 @@ function isInGames(gameDrawn, games) {
 }
 
 function getGame(results, games) {
+  let even = 0;
+  let odds = 0;
   let isIn = true;
   let game = [];
   while (isIn) {
+    even = 0;
+    odd = 0;
     game = [];
     for (let i = 1; i <= 15; i++) {
       let flag = false;
@@ -59,7 +63,18 @@ function getGame(results, games) {
     game.sort((a, b) => a - b);
     isIn = isGameInResult(game, results, games);
     if (!isIn) {
-      isIn = isInGames(game, games);
+      game.forEach((number) => {
+        if (number % 2 == 0) {
+          even++;
+        } else {
+          odd++;
+        }
+      });
+      if (even < 6 || odd < 6) {
+        isIn = true;
+      } else {
+        isIn = isInGames(game, games);
+      }
     }
   }
   return game;
