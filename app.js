@@ -70,7 +70,7 @@ function getGame(results, games) {
           odd++;
         }
       });
-      if (even < 6 || odd < 6) {
+      if (even < 5 || odd < 5) {
         isIn = true;
       } else {
         isIn = isInGames(game, games);
